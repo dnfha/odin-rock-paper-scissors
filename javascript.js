@@ -14,9 +14,6 @@ function getComputerChoice() {
 }
 
 function playGame(playerChoice) {
-  let humanScore = 0;
-  let computerScore = 0;
-
   function playRound(playerChoice) {
     const computerChoice = getComputerChoice();
     let result_msg = "";
@@ -38,17 +35,20 @@ function playGame(playerChoice) {
 
   playRound(playerChoice);
 
-  console.log(`
-    Human Score: ${humanScore}
-    Computer Score: ${computerScore}`);
-
-  if (humanScore > computerScore) {
-    console.log("You are the winner!");
-  } else if (humanScore < computerScore) {
-    console.log("Computer is the Winner!");
-  } else {
-    console.log("It's a tie!");
+  let announceWinner = "";
+  if (humanScore === 5) {
+    announceWinner = "You are the Winner!";
   }
+  if (computerScore === 5) {
+    announceWinner = "Computer is the Winner!";
+  }
+
+  overallResultPara.innerText = `
+    Human Score: ${humanScore}
+    Computer Score: ${computerScore}
+
+    ${announceWinner}
+    `;
 }
 
 const playerSelectionBtn = document.querySelector("#player-selection-btn");
@@ -58,6 +58,8 @@ const overallResultPara = document.createElement("p");
 resultDiv.appendChild(roundResultPara);
 resultDiv.appendChild(overallResultPara);
 playerSelectionBtn.parentNode.appendChild(resultDiv);
+let humanScore = 0;
+let computerScore = 0;
 
 playerSelectionBtn.addEventListener("click", (e) => {
   const playerChoice = e.target.id;
