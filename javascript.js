@@ -19,37 +19,22 @@ function playGame(playerChoice) {
 
   function playRound(playerChoice) {
     const computerChoice = getComputerChoice();
-    let result_msg = "It's a tie!";
-    if (computerChoice === "rock" && playerChoice === "scissors") {
-      result_msg = "You Lost! Rock beats scissors!";
+    let result_msg = "";
+    if (computerChoice === playerChoice) {
+      result_msg = `It's a Tie. ${computerChoice} and ${playerChoice} have the same power!`;
+    } else if (
+      (computerChoice === "rock" && playerChoice === "scissors") ||
+      (computerChoice === "paper" && playerChoice === "rock") ||
+      (computerChoice === "scissors" && playerChoice === "paper")
+    ) {
+      result_msg = `You Lost! ${computerChoice} beats ${playerChoice}!`;
       computerScore++;
-    }
-    if (computerChoice === "rock" && playerChoice === "paper") {
-      result_msg = "You Won! Paper beats rock!";
+    } else {
+      result_msg = `You Won! ${playerChoice} beats ${computerChoice}!`;
       humanScore++;
     }
-    if (computerChoice === "paper" && playerChoice === "rock") {
-      result_msg = "You Lost! Paper beats rock!";
-      computerScore++;
-    }
-    if (computerChoice === "paper" && playerChoice === "scissors") {
-      result_msg = "You Won! Scissors beats paper!";
-      humanScore++;
-    }
-    if (computerChoice === "scissors" && playerChoice === "paper") {
-      result_msg = "You Lost! Scissors beats paper!";
-      computerScore++;
-    }
-    if (computerChoice === "scissors" && playerChoice === "rock") {
-      result_msg = "You Won! Rock beats scissors!";
-      humanScore++;
-    }
-    console.log(result_msg);
+    roundResultPara.innerText = result_msg;
   }
-
-  /*   for (let i = 0; i < 5; i++) {
-    playRound();
-  } */
 
   playRound(playerChoice);
 
@@ -67,6 +52,12 @@ function playGame(playerChoice) {
 }
 
 const playerSelectionBtn = document.querySelector("#player-selection-btn");
+const resultDiv = document.createElement("div");
+const roundResultPara = document.createElement("p");
+const overallResultPara = document.createElement("p");
+resultDiv.appendChild(roundResultPara);
+resultDiv.appendChild(overallResultPara);
+playerSelectionBtn.parentNode.appendChild(resultDiv);
 
 playerSelectionBtn.addEventListener("click", (e) => {
   const playerChoice = e.target.id;
